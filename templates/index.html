@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='tyyli.css')}}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</head>
+<body>
+    <div class="main">
+        <select id="Automerkit" onChange="MalliSelect()">
+
+        </select>
+        <select id="mallit">
+        </select>
+        <button onclick="valittu()">Tallenna</button>
+    </div>
+</body>
+<script>
+    let autoData = {};
+    axios.get('/cars').then(res => { MerkitSelect(res.data) });
+    function MerkitSelect(autot) {
+        autoData = autot;
+        let merkit = autot.map(x => x.name);
+        merkit = [...new Set(merkit)]
+        var opts = '<option>Valitse valmistaja</option>';
+        merkit.map(merkki => {
+            opts += "<option value='" + merkki + "'>" + merkki + "</option>";
+        })
+        document.getElementById("Automerkit").innerHTML = opts;
+    }
+    function MalliSelect() {
+        let opts = "";
+        let x = document.getElementById("Automerkit").value;
+        autoData.map(auto => {
+            if (x == auto["name"]) {
+                opts += "<option value='" + auto["model"] + "'>" + auto["model"] + "</option>";
+            }
+        })
+        document.getElementById("mallit").innerHTML = opts;
+    }
+    function valittu() {
+        alert("Hieno valinta!\nKäytössäsi on " + document.getElementById("Automerkit").value + " " + document.getElementById("mallit").value + "!");
+    }
+</script>
+
+</html>

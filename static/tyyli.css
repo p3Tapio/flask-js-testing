@@ -1,0 +1,12 @@
+body {
+    background-color: aliceblue
+}
+.main{
+    
+    background-color: white;
+    margin: auto;
+    margin-top: 5%;
+    width: 50%;
+    border: 1px solid gray;
+    padding: 10px;
+}
